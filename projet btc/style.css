@@ -1,0 +1,11 @@
+body{
+    text-align: center;
+    background-color: rgb(143, 136, 136);
+}
+h1 {
+    color: #272343;
+  }
+  
+  #price {
+    font-size: 4em;
+  }
