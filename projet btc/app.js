@@ -1,26 +1,16 @@
 const url = 'https://blockchain.info/ticker';
 
-function recupererPrix() {
-  
-  let requete = new XMLHttpRequest(); 
-  requete.open('GET', url); 
-  requete.responseType = 'json'; 
-  requete.send(); 
+async function recupererPrix() {
+  const requete = await fetch(url, {
+    method: 'GET'
+  });
 
-  // Dèss qu'on reçoit une réponse, cette fonction est executée
-  requete.onload = function() {
-    if (requete.readyState === XMLHttpRequest.DONE) {
-      if (requete.status === 200) {
-        let reponse = requete.response; 
-        let prixEnEuros = reponse.EUR.last;
-        document.querySelector('#price_label').textContent = prixEnEuros;
-      }
-      else {
-        alert('Un problème est intervenu, merci de revenir plus tard.');
-      }
-    }
+  if(!requete.ok){
+    alert('Un problème est survenu.');
+  } else{
+    let donnees = await requete.json();
+    document.querySelector('span').textContent = donnees.EUR.last;
   }
-  console.log('Prix actualisé');
 }
 
-setInterval(recupererPrix, 1000);
+recupererPrix();
